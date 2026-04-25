@@ -5,8 +5,8 @@
 //  Created by Всеволод Пантелеев on 22.04.2026.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 final class NewsDataSourceApi: NewsDataSource {
 
@@ -22,6 +22,7 @@ final class NewsDataSourceApi: NewsDataSource {
         @ArrayBuilder<URLQueryItem>
         var queryItems: [URLQueryItem] {
             URLQueryItem(name: "apiKey", value: apiKey)
+            URLQueryItem(name: "sources", value: "bbc-news")
             if let search, !search.isEmpty {
                 URLQueryItem(name: "q", value: search)
             }
@@ -56,8 +57,15 @@ final class NewsDataSourceApi: NewsDataSource {
 
         let dataPuplisher = URLSession.shared.dataTaskPublisher(for: url).map(
             \.data
-        ).decode(type: Articales.self, decoder: JSONDecoder()).map{$0.articles}.eraseToAnyPublisher()
-        
+        )
+        .handleEvents(receiveOutput: { data in
+            if let json = String(data: data, encoding: .utf8) {
+                print("API response:", json)
+            }
+        }).decode(type: Articales.self, decoder: JSONDecoder()).map {
+            $0.articles
+        }.eraseToAnyPublisher()
+
         return dataPuplisher
 
     }

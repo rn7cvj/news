@@ -11,6 +11,8 @@ struct FeedView: View {
 
     @StateObject var viewModel: FeedViewModel
 
+    @State private var searchText = ""
+
     var body: some View {
 
         NavigationStack {
@@ -22,16 +24,30 @@ struct FeedView: View {
                 }
 
             }
+
             .navigationTitle(Text("Feed"))
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(
+                        action: {},
+                        label: {
+                            Image(systemName: "line.3.horizontal.decrease")
+                        },
+                    )
+                }
+            }
             .overlay(content: {
-                if viewModel.news.isEmpty{
+                if viewModel.news.isEmpty {
                     ProgressView()
                 }
             })
-        
-            .onAppear{
+            .refreshable {
+                viewModel.refresh(search: searchText)
+            }
+            .onAppear {
                 viewModel.getNews()
             }
+
         }
 
     }
@@ -58,6 +74,7 @@ struct NewsView: View {
             }
 
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
         .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 16))

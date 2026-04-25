@@ -20,6 +20,14 @@ class FeedViewModel: ObservableObject {
         self.getNewsUseCase = getNewsUseCase
     }
 
+    
+    func refresh(
+        search: String? = nil,
+    ) {
+        news.removeAll()
+        getNews(search: search)
+    }
+    
     func getNews(
         search: String? = nil,
         page: Int? = nil,
@@ -37,7 +45,7 @@ class FeedViewModel: ObservableObject {
                     }
                 },
                 receiveValue: { [weak self] news in
-                    self?.news = news
+                    self?.news.append(contentsOf: news)
                 }
             ).store(in: &cancelables)
     }
