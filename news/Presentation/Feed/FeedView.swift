@@ -11,8 +11,6 @@ struct FeedView: View {
 
     @StateObject var viewModel: FeedViewModel
 
-    @State private var searchText = ""
-
     var body: some View {
 
         NavigationStack {
@@ -20,7 +18,16 @@ struct FeedView: View {
             ScrollView {
 
                 ForEach(viewModel.news, id: \.self) {
-                    news in NewsView(news: news)
+                    news in
+                    NewsView(news: news)
+                        .onAppear {
+                            viewModel.loadMoreIfNeeded(currentItem: news)
+                        }
+                }
+
+                if viewModel.isLoadingPage, !viewModel.news.isEmpty {
+                    ProgressView()
+                        .padding(.vertical, 12)
                 }
 
             }
@@ -37,15 +44,15 @@ struct FeedView: View {
                 }
             }
             .overlay(content: {
-                if viewModel.news.isEmpty {
+                if viewModel.news.isEmpty, viewModel.isLoadingPage {
                     ProgressView()
                 }
             })
             .refreshable {
-                viewModel.refresh(search: searchText)
+                viewModel.refresh()
             }
             .onAppear {
-                viewModel.getNews()
+                viewModel.loadInitialIfNeeded()
             }
 
         }
@@ -83,29 +90,4 @@ struct NewsView: View {
 
 }
 
-struct ImageCarousel: View {
-    let urls = [
-        URL(string: "https://picsum.photos/id/239/200/300")!,
-        URL(string: "https://picsum.photos/id/240/200/300")!,
-        URL(string: "https://picsum.photos/id/241/200/300")!,
-    ]
 
-    var body: some View {
-        TabView {
-            ForEach(urls, id: \.self) { url in
-                AsyncImage(url: url) { image in
-                    image
-                        .resizable()
-                        .scaledToFill()
-                } placeholder: {
-                    ProgressView()
-                }
-                .frame(height: 200)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .padding(.horizontal, 16)
-            }
-        }
-        .frame(height: 220)
-        .tabViewStyle(.page(indexDisplayMode: .automatic))
-    }
-}

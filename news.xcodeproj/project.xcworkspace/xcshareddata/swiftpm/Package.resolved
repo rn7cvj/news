@@ -1,0 +1,15 @@
+{
+  "originHash" : "10fd691df256e89eb1f1b07aa55548dbfacd0db90a60b52870517ff7db84098a",
+  "pins" : [
+    {
+      "identity" : "swiftui_pagintaion_builder",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/rn7cvj/swiftui_pagintaion_builder.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ac0b3ac3a2048b860c41605ac0f4cf3f0137b415"
+      }
+    }
+  ],
+  "version" : 3
+}
