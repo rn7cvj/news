@@ -18,9 +18,14 @@ struct newsApp: App {
         )
 
         WindowGroup {
-            FeedView(
-                viewModel: viewModel
-            )
+            NavigationStack {
+                FeedView(
+                    viewModel: viewModel
+                )
+                .navigationDestination(for: News.self) { news in
+                    NewsDetailView(news: news)
+                }
+            }
         }
     }
 }
