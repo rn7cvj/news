@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import SwiftUIPagintaionBuilder
+import SwiftUIPaginationBuilder
 
 
 struct Articales : Codable ,Hashable   {

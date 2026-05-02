@@ -7,7 +7,7 @@
 
 import Combine
 import Foundation
-import SwiftUIPagintaionBuilder
+import SwiftUIPaginationBuilder
 
 @MainActor
 final class FeedViewModel: ObservableObject {

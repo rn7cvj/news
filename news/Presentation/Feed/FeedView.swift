@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import SwiftUIPagintaionBuilder
+import SwiftUIPaginationBuilder
 
 struct FeedView: View {
 
@@ -43,7 +43,7 @@ struct FeedView: View {
                 }
             }
             .refreshable {
-                await viewModel.refresh()
+                await viewModel.refresh(silent: true)
             }
         }
 
