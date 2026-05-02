@@ -1,13 +1,13 @@
 {
-  "originHash" : "10fd691df256e89eb1f1b07aa55548dbfacd0db90a60b52870517ff7db84098a",
+  "originHash" : "26ddbfb4c9ce668db8b57c0098e331272adfa900b87046347c6b62dd99055aa9",
   "pins" : [
     {
-      "identity" : "swiftui_pagintaion_builder",
+      "identity" : "swiftui_pagination_builder",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/rn7cvj/swiftui_pagintaion_builder.git",
+      "location" : "https://github.com/rn7cvj/swiftui_pagination_builder.git",
       "state" : {
         "branch" : "main",
-        "revision" : "ac0b3ac3a2048b860c41605ac0f4cf3f0137b415"
+        "revision" : "143d13ec953e96bb644c94772041523d6cc2c247"
       }
     }
   ],

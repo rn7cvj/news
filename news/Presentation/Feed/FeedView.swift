@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIPagintaionBuilder
 
 struct FeedView: View {
 
@@ -14,24 +15,22 @@ struct FeedView: View {
     var body: some View {
 
         NavigationStack {
-
-            ScrollView {
-
-                ForEach(viewModel.news, id: \.self) {
-                    news in
+            MPBBuilder(
+                controller: viewModel.controller,
+                spacing: 16,
+                padding: EdgeInsets(),
+                itemBuilder: { _, news, _, _, _ in
                     NewsView(news: news)
-                        .onAppear {
-                            viewModel.loadMoreIfNeeded(currentItem: news)
-                        }
-                }
-
-                if viewModel.isLoadingPage, !viewModel.news.isEmpty {
+                },
+                firstLoadingBuilder: { _ in
                     ProgressView()
-                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                },
+                noItemBuilder: { _ in
+                    Text("No news")
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
-
-            }
-
+            )
             .navigationTitle(Text("Feed"))
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -39,22 +38,13 @@ struct FeedView: View {
                         action: {},
                         label: {
                             Image(systemName: "line.3.horizontal.decrease")
-                        },
+                        }
                     )
                 }
             }
-            .overlay(content: {
-                if viewModel.news.isEmpty, viewModel.isLoadingPage {
-                    ProgressView()
-                }
-            })
             .refreshable {
-                viewModel.refresh()
+                await viewModel.refresh()
             }
-            .onAppear {
-                viewModel.loadInitialIfNeeded()
-            }
-
         }
 
     }
@@ -85,9 +75,6 @@ struct NewsView: View {
         .padding()
         .background(.regularMaterial)
         .clipShape(RoundedRectangle(cornerRadius: 16))
-        .padding(8)
     }
 
 }
-
-

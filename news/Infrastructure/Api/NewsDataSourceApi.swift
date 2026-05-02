@@ -58,11 +58,11 @@ final class NewsDataSourceApi: NewsDataSource {
         let dataPuplisher = URLSession.shared.dataTaskPublisher(for: url).map(
             \.data
         )
-//        .handleEvents(receiveOutput: { data in
-//            if let json = String(data: data, encoding: .utf8) {
-//                print("API response:", json)
-//            }
-//        })
+        .handleEvents(receiveOutput: { data in
+            if let json = String(data: data, encoding: .utf8) {
+                print("API response:", json)
+            }
+        })
         .decode(type: Articales.self, decoder: JSONDecoder()).map {
             $0.articles
         }.eraseToAnyPublisher()

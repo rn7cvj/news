@@ -6,17 +6,25 @@
 //
 
 import Foundation
+import SwiftUIPagintaionBuilder
 
 
-struct Articales : Codable ,Hashable  {
+struct Articales : Codable ,Hashable   {
     
     let totalResults : Int?
     let articles : [News]
 }
 
-struct News : Codable ,Hashable  {
+struct News : Codable ,Hashable , Identifiable {
+    
+    let id: UUID = UUID()
     
     let title: String?
     let description: String?
     
+    enum CodingKeys: String, CodingKey {
+        case title, description
+    }
+    
+
 }

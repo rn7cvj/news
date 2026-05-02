@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		702C00EC2FA4796B00848069 /* SwiftUIPagintaionBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = 702C00EB2FA4796B00848069 /* SwiftUIPagintaionBuilder */; };
+		704EE0A92FA5CFA10002814E /* SwiftUIPaginationBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = 704EE0A82FA5CFA10002814E /* SwiftUIPaginationBuilder */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,7 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				702C00EC2FA4796B00848069 /* SwiftUIPagintaionBuilder in Frameworks */,
+				704EE0A92FA5CFA10002814E /* SwiftUIPaginationBuilder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +70,7 @@
 			);
 			name = news;
 			packageProductDependencies = (
-				702C00EB2FA4796B00848069 /* SwiftUIPagintaionBuilder */,
+				704EE0A82FA5CFA10002814E /* SwiftUIPaginationBuilder */,
 			);
 			productName = news;
 			productReference = 709C5DEA2F98868F00B99B23 /* news.app */;
@@ -101,7 +101,7 @@
 			mainGroup = 709C5DE12F98868F00B99B23;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				702C00EA2FA4796B00848069 /* XCRemoteSwiftPackageReference "swiftui_pagintaion_builder" */,
+				704EE0A72FA5CFA10002814E /* XCRemoteSwiftPackageReference "swiftui_pagination_builder" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 709C5DEB2F98868F00B99B23 /* Products */;
@@ -341,9 +341,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		702C00EA2FA4796B00848069 /* XCRemoteSwiftPackageReference "swiftui_pagintaion_builder" */ = {
+		704EE0A72FA5CFA10002814E /* XCRemoteSwiftPackageReference "swiftui_pagination_builder" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rn7cvj/swiftui_pagintaion_builder.git";
+			repositoryURL = "https://github.com/rn7cvj/swiftui_pagination_builder.git";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -352,10 +352,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		702C00EB2FA4796B00848069 /* SwiftUIPagintaionBuilder */ = {
+		704EE0A82FA5CFA10002814E /* SwiftUIPaginationBuilder */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 702C00EA2FA4796B00848069 /* XCRemoteSwiftPackageReference "swiftui_pagintaion_builder" */;
-			productName = SwiftUIPagintaionBuilder;
+			package = 704EE0A72FA5CFA10002814E /* XCRemoteSwiftPackageReference "swiftui_pagination_builder" */;
+			productName = SwiftUIPaginationBuilder;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
