@@ -84,7 +84,7 @@ struct NewsDetailView: View {
                 }
 
                 if let author = news.author {
-                    Text("By \(author)")
+                    Text(String(format: String(localized: "news.by"), author))
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                 }
@@ -101,7 +101,7 @@ struct NewsDetailView: View {
                 }
 
                 if let articleURL {
-                    Link("Open original article", destination: articleURL)
+                    Link("news.openOriginal", destination: articleURL)
                         .font(.headline)
                         .padding(.top, 4)
                 }
@@ -110,7 +110,7 @@ struct NewsDetailView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 12)
         }
-        .navigationTitle("News")
+        .navigationTitle("news.title")
         .navigationBarTitleDisplayMode(.inline)
     }
 }

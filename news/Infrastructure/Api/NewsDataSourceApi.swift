@@ -10,8 +10,15 @@ import Foundation
 final class NewsDataSourceApi: NewsDataSource {
 
     private var apiKey: String?
-    
-    
+    private var languageCode: String {
+        guard let preferred = Locale.preferredLanguages.first, !preferred.isEmpty else {
+            return "en"
+        }
+
+        let baseCode = preferred.split(separator: "-").first.map(String.init) ?? preferred
+        return String(baseCode.prefix(2)).lowercased()
+    }
+
     init() {
         self.apiKey = Bundle.main.object(forInfoDictionaryKey: "NEWS_API_KEY") as? String
     }
@@ -29,7 +36,8 @@ final class NewsDataSourceApi: NewsDataSource {
                 URLQueryItem(name: "apiKey", value: apiKey)
 
             }
-            URLQueryItem(name: "sources", value: "bbc-news")
+            URLQueryItem(name: "sources", value: "google-news-ru")
+            URLQueryItem(name: "language", value: languageCode)
             if let search, !search.isEmpty {
                 URLQueryItem(name: "q", value: search)
             }
@@ -63,7 +71,7 @@ final class NewsDataSourceApi: NewsDataSource {
         let (data, _) = try await URLSession.shared.data(from: url)
 
         if let json = String(data: data, encoding: .utf8) {
-            print("API response:", json)
+            print(String(localized: "debug.apiResponse"), json)
         }
 
         return try JSONDecoder().decode(Articales.self, from: data).articles

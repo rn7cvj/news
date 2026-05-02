@@ -20,19 +20,19 @@ struct FeedView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             case .empty:
-                Text("No news")
+                Text("feed.empty")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
 
             case .error(let message):
                 VStack(spacing: 12) {
-                    Text("Failed to load news")
+                    Text("feed.error")
                         .font(.headline)
                     Text(message)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .multilineTextAlignment(.center)
 
-                    Button("Retry") {
+                    Button("feed.retry") {
                         Task {
                             await viewModel.refresh()
                         }
@@ -74,7 +74,7 @@ struct FeedView: View {
                 )
             }
         }
-        .navigationTitle(Text("Feed"))
+        .navigationTitle("feed.title")
         .onAppear {
             Task {
                 await viewModel.refresh()
@@ -83,7 +83,6 @@ struct FeedView: View {
         .refreshable {
             await viewModel.refresh()
         }
-
     }
 
 }
