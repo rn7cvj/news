@@ -6,10 +6,9 @@
 //
 
 import Foundation
-import Combine
 
 protocol NewsRepository {
 
-    func getNews( search : String?, page: Int? , pageSize : Int ) -> AnyPublisher<[News] , Error>
+    func getNews(search: String?, page: Int?, pageSize: Int) async throws -> [News]
     
 }

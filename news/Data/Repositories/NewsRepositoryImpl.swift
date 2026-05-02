@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import Combine
 
 final class  NewsRepositoryImpl : NewsRepository {
 
@@ -16,8 +15,8 @@ final class  NewsRepositoryImpl : NewsRepository {
         self.dataSource = dataSource
     }
     
-    func getNews( search : String?, page: Int? , pageSize : Int ) -> AnyPublisher<[News] , Error> {
-        dataSource.getNews(search: search, page: page, pageSize: pageSize)
+    func getNews(search: String?, page: Int?, pageSize: Int) async throws -> [News] {
+        try await dataSource.getNews(search: search, page: page, pageSize: pageSize)
     }
     
 }

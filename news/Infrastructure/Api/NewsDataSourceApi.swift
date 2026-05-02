@@ -5,7 +5,6 @@
 //  Created by Всеволод Пантелеев on 22.04.2026.
 //
 
-import Combine
 import Foundation
 
 final class NewsDataSourceApi: NewsDataSource {
@@ -49,9 +48,7 @@ final class NewsDataSourceApi: NewsDataSource {
         return components.url
     }
 
-    func getNews(search: String?, page: Int?, pageSize: Int) -> AnyPublisher<
-        [News], any Error
-    > {
+    func getNews(search: String?, page: Int?, pageSize: Int) async throws -> [News] {
 
         guard
             let url = makeNewsURL(
@@ -60,23 +57,16 @@ final class NewsDataSourceApi: NewsDataSource {
                 pageSize: pageSize
             )
         else {
-            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+            throw URLError(.badURL)
         }
 
-        let dataPuplisher = URLSession.shared.dataTaskPublisher(for: url).map(
-            \.data
-        )
-        .handleEvents(receiveOutput: { data in
-            if let json = String(data: data, encoding: .utf8) {
-                print("API response:", json)
-            }
-        })
-        .decode(type: Articales.self, decoder: JSONDecoder()).map {
-            $0.articles
-        }.eraseToAnyPublisher()
+        let (data, _) = try await URLSession.shared.data(from: url)
 
-        return dataPuplisher
+        if let json = String(data: data, encoding: .utf8) {
+            print("API response:", json)
+        }
 
+        return try JSONDecoder().decode(Articales.self, from: data).articles
     }
 
 }
