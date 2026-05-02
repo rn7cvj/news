@@ -17,3 +17,6 @@ DerivedData/
 # Playgrounds
 timeline.xctimeline
 playground.xcworkspace
+
+# Local secrets
+news/Configuration.xcconfig
