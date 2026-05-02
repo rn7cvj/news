@@ -11,6 +11,7 @@ import SwiftUIPaginationBuilder
 struct FeedView: View {
 
     @StateObject var viewModel: FeedViewModel
+    @State var previewNews: News?
 
     var body: some View {
 
@@ -47,22 +48,21 @@ struct FeedView: View {
                 case .loaded(let items, _, _, _):
                     ScrollView {
                         LazyVStack(spacing: 12) {
-                            ForEach(Array(items.enumerated()), id: \.element.id) { index, news in
-                                NewsView(news: news)
+                            ForEach(Array(items.enumerated()), id: \.element.id)
+                            { index, news in
+                                FeedNewsView(news: news)
                                     .onAppear {
                                         if index == items.count - 1 {
                                             Task {
                                                 await viewModel.loadNextPage()
                                             }
                                         }
-                                    }.padding(.horizontal , 16)
+                                    }.padding(.horizontal, 16)
+                                    .onLongPressGesture(perform: {
+                                        previewNews = news
+                                    })
                             }
 
-//                            if isLoadingMore {
-//                                ProgressView()
-//                                    .frame(maxWidth: .infinity)
-//                                    .padding(.vertical, 8)
-//                            }
                         }
                     }
                 }
@@ -83,41 +83,14 @@ struct FeedView: View {
                     await viewModel.refresh()
                 }
             }
-//            .refreshable {
-//                await viewModel.refresh()
-//            }
-//            
+            .fullScreenCover(item: $previewNews) { news in
+                FeedNewsPreview(news: news)
+            }
+
+     
 
         }
 
-    }
-
-}
-
-struct NewsView: View {
-
-    let news: News
-
-    var body: some View {
-
-        VStack(alignment: .leading, spacing: 8) {
-
-            if let title = news.title {
-                Text(title).font(.title2)
-            }
-
-            if let desciption = news.description {
-                Text(
-                    desciption
-                ).font(.default)
-
-            }
-
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding()
-        .background(.regularMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
 }
