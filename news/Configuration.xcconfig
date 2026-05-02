@@ -7,3 +7,5 @@
 
 // Configuration settings file format documentation can be found at:
 // https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project
+
+NEWS_API_KEY=34d96505c96143bd9a6d3e2ee9b91343

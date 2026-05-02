@@ -7,35 +7,34 @@
 
 import Combine
 import Foundation
-import SwiftUIPaginationBuilder
+
+
+enum FeedState: Equatable {
+    case loading
+    case loaded
+    case fullLoaded
+    case empty
+    case error(String)
+}
 
 @MainActor
 final class FeedViewModel: ObservableObject {
 
-    @Published var search: String?
-
-    let controller: MPBController<News>
-
     private let getNewsUseCase: GetNewsUseCase
+
+//    @Published var search: String? = nil
+    @Published var news : [News] = []
+    @Published var currentPage : Int = 0
+    @Published var state : FeedState = FeedState.loading
+    
 
     init(getNewsUseCase: GetNewsUseCase) {
         self.getNewsUseCase = getNewsUseCase
-        self.controller = MPBController<News>(
-
-            dataLoader: { pageIndex, pageSize, _ in
-                var iterator =
-                    getNewsUseCase
-                    .exucute(search: nil, page: pageIndex, pageSize: pageSize)
-                    .values
-                    .makeAsyncIterator()
-                return try await iterator.next() ?? []
-            },
-            initialPageIndex: 1,
-            pageSize: 16,
-        )
     }
 
-    func refresh(silent : Bool = true) async {
-        await controller.refresh(silent: silent)
+    func loadNextPage() {
+        
+        
+        
     }
 }

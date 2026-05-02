@@ -11,27 +11,17 @@ import SwiftUIPaginationBuilder
 struct FeedView: View {
 
     @StateObject var viewModel: FeedViewModel
-
     var body: some View {
 
         NavigationStack {
-            MPBBuilder(
-                controller: viewModel.controller,
-                spacing: 16,
-                padding: EdgeInsets(),
-                itemBuilder: { _, news, _, _, _ in
-                    NewsView(news: news)
-                },
-                firstLoadingBuilder: { _ in
-                    ProgressView()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                },
-                noItemBuilder: { _ in
-                    Text("No news")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            ScrollView {
+                LazyVStack(spacing: 12) {
+                    ForEach(viewModel.news) { news in
+                        NewsView(news: news)
+                    }
                 }
-            )
-            .navigationTitle(Text("Feed"))
+            }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button(
@@ -42,9 +32,18 @@ struct FeedView: View {
                     )
                 }
             }
-            .refreshable {
-                await viewModel.refresh(silent: true)
+            .navigationTitle(Text("Feed"))
+            .onAppear {
+                Task {
+                  await  viewModel.refresh()
+                }
+                
             }
+            .refreshable {
+                
+            }
+            
+
         }
 
     }

@@ -10,7 +10,12 @@ import Foundation
 
 final class NewsDataSourceApi: NewsDataSource {
 
-    private var apiKey: String = "34d96505c96143bd9a6d3e2ee9b91343"
+    private var apiKey: String?
+    
+    
+    init() {
+        self.apiKey = Bundle.main.object(forInfoDictionaryKey: "NEWS_API_KEY") as? String
+    }
 
     private func makeNewsURL(search: String?, page: Int?, pageSize: Int) -> URL?
     {
@@ -21,7 +26,10 @@ final class NewsDataSourceApi: NewsDataSource {
 
         @ArrayBuilder<URLQueryItem>
         var queryItems: [URLQueryItem] {
-            URLQueryItem(name: "apiKey", value: apiKey)
+            if let apiKey {
+                URLQueryItem(name: "apiKey", value: apiKey)
+
+            }
             URLQueryItem(name: "sources", value: "bbc-news")
             if let search, !search.isEmpty {
                 URLQueryItem(name: "q", value: search)

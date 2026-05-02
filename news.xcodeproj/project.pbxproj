@@ -6,17 +6,26 @@
 	objectVersion = 77;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		704EE0A92FA5CFA10002814E /* SwiftUIPaginationBuilder in Frameworks */ = {isa = PBXBuildFile; productRef = 704EE0A82FA5CFA10002814E /* SwiftUIPaginationBuilder */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXFileReference section */
 		709C5DEA2F98868F00B99B23 /* news.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = news.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		704EE1272FA5EC440002814E /* Exceptions for "news" folder in "news" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 709C5DE92F98868F00B99B23 /* news */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		709C5DEC2F98868F00B99B23 /* news */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				704EE1272FA5EC440002814E /* Exceptions for "news" folder in "news" target */,
+			);
 			path = news;
 			sourceTree = "<group>";
 		};
@@ -27,7 +36,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				704EE0A92FA5CFA10002814E /* SwiftUIPaginationBuilder in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,7 +78,6 @@
 			);
 			name = news;
 			packageProductDependencies = (
-				704EE0A82FA5CFA10002814E /* SwiftUIPaginationBuilder */,
 			);
 			productName = news;
 			productReference = 709C5DEA2F98868F00B99B23 /* news.app */;
@@ -101,7 +108,6 @@
 			mainGroup = 709C5DE12F98868F00B99B23;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				704EE0A72FA5CFA10002814E /* XCRemoteSwiftPackageReference "swiftui_pagination_builder" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 709C5DEB2F98868F00B99B23 /* Products */;
@@ -136,6 +142,8 @@
 /* Begin XCBuildConfiguration section */
 		709C5DF32F98869000B99B23 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 709C5DEC2F98868F00B99B23 /* news */;
+			baseConfigurationReferenceRelativePath = Configuration.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -199,6 +207,8 @@
 		};
 		709C5DF42F98869000B99B23 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReferenceAnchor = 709C5DEC2F98868F00B99B23 /* news */;
+			baseConfigurationReferenceRelativePath = Configuration.xcconfig;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -263,6 +273,7 @@
 				DEVELOPMENT_TEAM = T87J89NZ86;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = news/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -295,6 +306,7 @@
 				DEVELOPMENT_TEAM = T87J89NZ86;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = news/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -339,25 +351,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		704EE0A72FA5CFA10002814E /* XCRemoteSwiftPackageReference "swiftui_pagination_builder" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/rn7cvj/swiftui_pagination_builder.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		704EE0A82FA5CFA10002814E /* SwiftUIPaginationBuilder */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 704EE0A72FA5CFA10002814E /* XCRemoteSwiftPackageReference "swiftui_pagination_builder" */;
-			productName = SwiftUIPaginationBuilder;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 709C5DE22F98868F00B99B23 /* Project object */;
 }
