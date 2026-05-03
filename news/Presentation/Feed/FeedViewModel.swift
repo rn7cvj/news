@@ -8,7 +8,6 @@
 import Combine
 import Foundation
 
-
 enum FeedState: Equatable {
     case idle
     case loading
@@ -23,6 +22,9 @@ final class FeedViewModel: ObservableObject {
     private let getNewsUseCase: GetNewsUseCase
     private let pageSize: Int
     private let initialPage: Int
+
+    private var selectedSourceIds: [String]?
+    private var selectedLanguageCode: String
 
     @Published var search: String? = nil
     @Published private(set) var state: FeedState = .idle
@@ -52,10 +54,18 @@ final class FeedViewModel: ObservableObject {
         }
     }
 
-    init(getNewsUseCase: GetNewsUseCase) {
+    init(getNewsUseCase: GetNewsUseCase, initialLanguageCode: String? = nil) {
         self.getNewsUseCase = getNewsUseCase
         self.pageSize = 16
         self.initialPage = 1
+        self.selectedLanguageCode = initialLanguageCode ?? Self.defaultLanguageCode()
+        self.selectedSourceIds = nil
+    }
+
+    func applyFilters(languageCode: String, sourceIds: [String]?) async {
+        selectedLanguageCode = languageCode
+        selectedSourceIds = sourceIds
+        await refresh()
     }
 
     func refresh() async {
@@ -119,6 +129,22 @@ final class FeedViewModel: ObservableObject {
     }
 
     private func fetchPage(page: Int) async throws -> [News] {
-        try await getNewsUseCase.exucute(search: search, page: page, pageSize: pageSize)
+        try await getNewsUseCase.exucute(
+            search: search,
+            sourceIds: selectedSourceIds,
+            language: selectedLanguageCode,
+            page: page,
+            pageSize: pageSize
+        )
+    }
+
+    private static func defaultLanguageCode() -> String {
+        guard let preferred = Locale.preferredLanguages.first, !preferred.isEmpty else {
+            return "en"
+        }
+
+        let baseCode = preferred.split(separator: "-").first.map(String.init)?.lowercased() ?? "en"
+        let supported = Set(["ar", "de", "en", "es", "fr", "he", "it", "nl", "no", "pt", "ru", "sv", "ud", "zh"])
+        return supported.contains(baseCode) ? baseCode : "en"
     }
 }

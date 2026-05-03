@@ -7,7 +7,7 @@
 
 protocol GetNewsUseCase {
     
-    func exucute(search: String?, page: Int?, pageSize: Int) async throws -> [News]
+    func exucute(search: String?, sourceIds: [String]?, language: String?, page: Int?, pageSize: Int) async throws -> [News]
     
 }
 
@@ -22,8 +22,8 @@ final class GetNewsUseCaseImpl : GetNewsUseCase {
         self.repository = repository
     }
     
-    func exucute(search: String?, page: Int?, pageSize: Int) async throws -> [News] {
-        try await repository.getNews(search: search, page: page, pageSize: pageSize)
+    func exucute(search: String?, sourceIds: [String]?, language: String?, page: Int?, pageSize: Int) async throws -> [News] {
+        try await repository.getNews(search: search, sourceIds: sourceIds, language: language, page: page, pageSize: pageSize)
     }
     
     

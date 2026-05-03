@@ -10,6 +10,8 @@ import SwiftUI
 struct FeedView: View {
 
     @StateObject var viewModel: FeedViewModel
+    @StateObject var filtersViewModel: NewsFiltersViewModel
+    @State private var isFiltersSheetPresented = false
 
     var body: some View {
 
@@ -67,17 +69,34 @@ struct FeedView: View {
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Button(
-                    action: {},
+                    action: {
+                        Task {
+                            await filtersViewModel.loadSourcesIfNeeded()
+                            isFiltersSheetPresented = true
+                        }
+                    },
                     label: {
                         Image(systemName: "line.3.horizontal.decrease")
                     }
                 )
             }
         }
+        .adaptiveSheet(isPresent: $isFiltersSheetPresented) {
+            NewsFiltersSheetView(viewModel: filtersViewModel) {
+                await viewModel.applyFilters(
+                    languageCode: filtersViewModel.selectedLanguageCode,
+                    sourceIds: filtersViewModel.resolvedSourceIds()
+                )
+            }
+            .presentationBackground(.thinMaterial)
+        }
         .navigationTitle("feed.title")
         .onAppear {
             Task {
-                await viewModel.refresh()
+                await viewModel.applyFilters(
+                    languageCode: filtersViewModel.selectedLanguageCode,
+                    sourceIds: filtersViewModel.resolvedSourceIds()
+                )
             }
         }
         .refreshable {

@@ -15,8 +15,12 @@ final class  NewsRepositoryImpl : NewsRepository {
         self.dataSource = dataSource
     }
     
-    func getNews(search: String?, page: Int?, pageSize: Int) async throws -> [News] {
-        try await dataSource.getNews(search: search, page: page, pageSize: pageSize)
+    func getNews(search: String?, sourceIds: [String]?, language: String?, page: Int?, pageSize: Int) async throws -> [News] {
+        try await dataSource.getNews(search: search, sourceIds: sourceIds, language: language, page: page, pageSize: pageSize)
+    }
+
+    func getNewsSources(language: String?) async throws -> [NewsCatalogSource] {
+        try await dataSource.getNewsSources(language: language)
     }
     
 }

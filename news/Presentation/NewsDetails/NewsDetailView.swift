@@ -46,6 +46,7 @@ struct NewsDetailView: View {
                             case .success(let image):
                                 image
                                     .resizable()
+                                    .scaledToFill()
                                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                             case .failure:
                                 Image(systemName: "photo")
