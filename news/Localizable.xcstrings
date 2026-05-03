@@ -69,6 +69,23 @@
         }
       }
     },
+    "feed.search" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Search news"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Поиск новостей"
+          }
+        }
+      }
+    },
     "feed.title" : {
       "extractionState" : "manual",
       "localizations" : {

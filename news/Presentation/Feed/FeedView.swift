@@ -12,6 +12,13 @@ struct FeedView: View {
     @StateObject var viewModel: FeedViewModel
     @StateObject var filtersViewModel: NewsFiltersViewModel
     @State private var isFiltersSheetPresented = false
+    
+    private var searchBinding: Binding<String> {
+        Binding(
+            get: { viewModel.searchQuery },
+            set: { viewModel.onSearchQueryChanged($0) }
+        )
+    }
 
     var body: some View {
 
@@ -91,6 +98,10 @@ struct FeedView: View {
             .presentationBackground(.thinMaterial)
         }
         .navigationTitle("feed.title")
+        .searchable(
+            text: searchBinding,
+            prompt: "feed.search"
+        )
         .onAppear {
             Task {
                 await viewModel.applyFilters(

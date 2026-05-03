@@ -25,8 +25,9 @@ final class FeedViewModel: ObservableObject {
 
     private var selectedSourceIds: [String]?
     private var selectedLanguageCode: String
+    private var pendingSearchTask: Task<Void, Never>? = nil
 
-    @Published var search: String? = nil
+    @Published private(set) var searchQuery: String = ""
     @Published private(set) var state: FeedState = .idle
 
     var news: [News] {
@@ -60,6 +61,10 @@ final class FeedViewModel: ObservableObject {
         self.initialPage = 1
         self.selectedLanguageCode = initialLanguageCode ?? Self.defaultLanguageCode()
         self.selectedSourceIds = nil
+    }
+
+    deinit {
+        pendingSearchTask?.cancel()
     }
 
     func applyFilters(languageCode: String, sourceIds: [String]?) async {
@@ -128,14 +133,37 @@ final class FeedViewModel: ObservableObject {
         }
     }
 
+    func onSearchQueryChanged(_ query: String) {
+        guard query != searchQuery else { return }
+        searchQuery = query
+        pendingSearchTask?.cancel()
+
+        pendingSearchTask = Task { [weak self] in
+            try? await Task.sleep(for: .milliseconds(400))
+            guard let self, !Task.isCancelled else { return }
+
+            while case .loading = self.state {
+                try? await Task.sleep(for: .milliseconds(150))
+                guard !Task.isCancelled else { return }
+            }
+
+            await self.refresh()
+        }
+    }
+
     private func fetchPage(page: Int) async throws -> [News] {
         try await getNewsUseCase.exucute(
-            search: search,
+            search: normalizedSearch,
             sourceIds: selectedSourceIds,
             language: selectedLanguageCode,
             page: page,
             pageSize: pageSize
         )
+    }
+
+    private var normalizedSearch: String? {
+        let query = searchQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        return query.isEmpty ? nil : query
     }
 
     private static func defaultLanguageCode() -> String {
