@@ -20,5 +20,3 @@
    `news/Configuration.example.xcconfig` -> `news/Configuration.xcconfig`
 2. Укажите реальный ключ:
    `NEWS_API_KEY=...`
-
-`news/Configuration.xcconfig` добавлен в `.gitignore` и не должен попадать в git.
