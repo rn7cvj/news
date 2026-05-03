@@ -113,5 +113,15 @@ struct NewsDetailView: View {
         }
         .navigationTitle("news.title")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            if let articleURL {
+                ToolbarItem(placement: .topBarTrailing) {
+                    ShareLink(item: articleURL) {
+                        Image(systemName: "square.and.arrow.up")
+                    }
+                    .accessibilityLabel("news.share")
+                }
+            }
+        }
     }
 }
